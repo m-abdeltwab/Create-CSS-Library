@@ -1,0 +1,61 @@
+$color-theme: (
+  "red": rgb(255, 0, 0),
+  "yellow": rgb(255, 255, 0),
+  "lime": rgb(0, 255, 0),
+  "blue": rgb(0, 0, 255),
+  "gray": gray,
+  "white": white,
+  "black": black,
+);
+
+@each $name, $color in $color-theme {
+  @if ($color != white and $color != black) {
+    // Light Version
+    @for $l from 1 through 4 {
+      // text
+      .text-#{$name}-#{$l} {
+        color: mix($color, #fff, $l * 20);
+      }
+
+      .bg-#{$name}-#{$l} {
+        background-color: mix($color, #fff, $l * 20);
+      }
+    }
+
+    // Dark Version
+    @for $d from 5 through 9 {
+      .text-#{$name}-#{$d} {
+        color: mix($color, #000, (10 - $d) * 20);
+      }
+
+      .bg-#{$name}-#{$d} {
+        background-color: mix($color, #000, (10 - $d) * 20);
+      }
+    }
+
+    // hover
+    .text-hover:hover {
+      @if (lightness($color) >= 50) {
+        color: darken($color, 30%);
+      } @else {
+        color: lighten($color, 30%);
+      }
+    }
+
+    .bg-hover:hover {
+      @if (lightness($color) >= 50) {
+        background-color: darken($color, 30%);
+      } @else {
+        background-color: lighten($color, 30%);
+      }
+    }
+  } @else {
+    .text-#{$name} {
+      color: $color;
+    }
+
+    .bg-#{$name} {
+      background-color: $color;
+    }
+  }
+}

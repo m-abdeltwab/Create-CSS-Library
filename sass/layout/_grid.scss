@@ -1,0 +1,116 @@
+@use "sass:math";
+@use "breakpoints" as *;
+
+$grid-columns: 12;
+
+$grid-gaps: (
+  "0": 0,
+  "1": 1rem,
+  "2": 2rem,
+  "3": 3rem,
+  "4": 4rem,
+  "5": 5rem,
+);
+$flex-space: (
+  "start": flex-start,
+  "end": flex-end,
+  "center": center,
+  "between": space-between,
+  "around": space-around,
+);
+// base classes
+.container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+// Gap Classes
+@each $key, $val in $grid-gaps {
+  .gap-x-#{$key} > * {
+    padding-right: $val;
+  }
+  .gap-x-#{$key} {
+    margin-right: -$val;
+  }
+  .gap-y-#{$key} > * {
+    padding-top: $val;
+  }
+  .gap-y-#{$key} {
+    margin-top: -$val;
+  }
+}
+
+@mixin col($i) {
+  box-sizing: border-box;
+  flex-grow: 0;
+  max-width: 100% * math.div($grid-columns, $i);
+  width: 100%;
+}
+
+// col classes
+@include xs {
+  @for $i from 1 through $grid-columns {
+    .col-xs-#{$i} {
+      @include col($i);
+    }
+  }
+}
+@include sm {
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      @include col($i);
+    }
+  }
+}
+@include md {
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      @include col($i);
+    }
+  }
+}
+@include lg {
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      @include col($i);
+    }
+  }
+}
+@include xl {
+  @for $i from 1 through $grid-columns {
+    .col-xl-#{$i} {
+      @include col($i);
+    }
+  }
+}
+
+@include xxl {
+  @for $i from 1 through $grid-columns {
+    .col-xxl-#{$i} {
+      @include col($i);
+    }
+  }
+}
+@include breakpoint {
+  @for $i from 1 through $grid-columns {
+    .col-#{$i} {
+      @include col($i);
+    }
+  }
+}
+
+// Justify Content classes
+@each $val, $key in $flex-space {
+  .justify-#{$val} {
+    justify-content: $key;
+  }
+}
